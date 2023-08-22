@@ -24,7 +24,7 @@ fn main() {
         .add_systems(Startup, setup)
 
         //Debug
-        .add_plugins(LunexDebugPlugin)
+        //.add_plugins(LunexDebugPlugin)
 
 
         .add_systems(Update, (hierarchy_update, element_update).chain())
