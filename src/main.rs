@@ -6,8 +6,7 @@ use bevy::core_pipeline::bloom::{BloomSettings, BloomPrefilterSettings, BloomCom
 use bevy::core_pipeline::tonemapping::Tonemapping;
 
 mod interface;
-
-use crate::interface::main_menu::*;
+use interface::*;
 
 fn main() {
     App::new()
@@ -29,6 +28,8 @@ fn main() {
 
         .add_systems(Update, (hierarchy_update, element_update).chain())
 
+        .add_plugins(InterfacePlugin)
+
         .run();
 }
 
@@ -45,11 +46,11 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                 hdr: true,
                 ..default()
             },
-            tonemapping: Tonemapping::None,
+            tonemapping: Tonemapping::ReinhardLuminance,
             ..default()
         },
         BloomSettings {
-            intensity: 0.20,
+            intensity: 0.50,
             low_frequency_boost: 0.8,
             low_frequency_boost_curvature: 0.95,
             high_pass_frequency: 0.9,

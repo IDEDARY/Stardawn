@@ -6,6 +6,7 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+mathio = "0.2.0"
 bevy = { git = "https://github.com/bevyengine/bevy", features = ["dynamic_linking"] }
 #bevy_lunex = { git = "https://github.com/bytestring-net/bevy-lunex", branch = "main" }
 bevy_lunex = { path = "/home/dominik/Projects/Bytestring/bevy-lunex" }
