@@ -8,7 +8,7 @@ pub fn build_main_menu (commands: &mut Commands, asset_server: &Res<AssetServer>
     let mut temporary_tree = UITree::new();
 
     //Create the widgets and handle errors
-    let background = Widget::create(&mut temporary_tree, "background", Layout::Solid::default().with_scaling(SolidScale::Fit).pack())?;
+    let background = Widget::create(&mut temporary_tree, "background", layout::Solid::default().with_scaling(SolidScale::Fit).pack())?;
 
     //Merge the temporary tree to main tree if nothing failed so far
     ui_tree.merge(temporary_tree)?;
