@@ -1,6 +1,6 @@
+//# Bevy imports
 use bevy_lunex::prelude::*;
-use bevy::{prelude::*, sprite::Anchor};
-
+use bevy::prelude::*;
 //# For visual effects only
 use bevy::core_pipeline::bloom::{BloomSettings, BloomPrefilterSettings, BloomCompositeMode};
 use bevy::core_pipeline::tonemapping::Tonemapping;
@@ -24,10 +24,10 @@ fn main() {
         .add_systems(Startup, setup)
 
         //Debug
-        //.add_plugins(LunexDebugPlugin)
+        .add_plugins(LunexDebugPlugin)
 
 
-        .add_systems(Update, (hierarchy_update, cursor_update).chain())
+        .add_systems(Update, (hierarchy_update, element_update).chain())
 
         .run();
 }
@@ -61,28 +61,14 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
         }
     ));
 
-    //# Spawn cursor
-    commands.spawn ((
-        Cursor::new(10.0),
-        SpriteBundle {
-            texture: asset_server.load("cursor_mouse.png"),
-            transform: Transform { translation: Vec3 { x: 0., y: 0., z: 800. } , scale: Vec3 { x: 0.4, y: 0.4, z: 1. }, ..default() },
-            sprite: Sprite {
-                color: Color::rgba(1., 1., 1., 2.0),
-                anchor: Anchor::TopLeft,
-                ..default()
-            },
-            ..default()
-        },
-    ));
-
-
-    let mut ui_tree = UITree::new();
+    
+    let mut ui_tree = UiTree::new();
     build_main_menu(&mut commands, &asset_server, &mut ui_tree).unwrap();
     
 
     println!("{}", ui_tree.get_map_debug());
     println!("{}", ui_tree.get_map());
     commands.spawn (ui_tree);
+    
 
 }
