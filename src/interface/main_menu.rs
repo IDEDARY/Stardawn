@@ -45,12 +45,48 @@ pub fn build_main_menu (commands: &mut Commands, asset_server: &Res<AssetServer>
     //# Spawn the planet
     commands.spawn((
         ImageElementBundle::new(boundary.clone(), &ImageParams::center().with_depth(0.5).at(85.0, 75.0), asset_server.load("images/interface/main_menu/planet.png"), Vec2::new(1230.0,1341.0)),
+        SlowRotation::new(f32::to_radians(-0.02)),
     ));
 
     //# Spawn the ring
     commands.spawn((
         ImageElementBundle::new(boundary.clone(), &ImageParams::center().with_depth(0.5).at(85.0, 75.0).scaled(200.0), asset_server.load("images/interface/main_menu/planet_ring_lowres.png"), Vec2::new(1077.0,1065.0)),
+        SlowRotation::new(f32::to_radians(0.02)),
     ));
 
     Result::Ok(())
+}
+
+
+
+
+
+
+
+/// # Slow Rotation Effect
+#[derive(Component, Default)]
+pub struct SlowRotation {
+    ang_speed: f32,
+}
+impl SlowRotation {
+    pub fn new (ang_speed: f32) -> SlowRotation {
+        SlowRotation {
+            ang_speed,
+        }
+    }
+}
+pub fn slow_rotation_update (mut query: Query<(&mut Transform, &mut SlowRotation)>) {
+    for (mut transform, mut rotation) in &mut query {
+        transform.rotate_z(rotation.ang_speed);
+    }
+}
+
+
+
+pub struct MainMenuPlugin;
+impl Plugin for MainMenuPlugin {
+    fn build(&self, app: &mut App) {
+        app
+            .add_systems(Update, slow_rotation_update);
+    }
 }

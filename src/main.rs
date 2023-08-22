@@ -29,6 +29,7 @@ fn main() {
         .add_systems(Update, (hierarchy_update, element_update).chain())
 
         .add_plugins(InterfacePlugin)
+        .add_plugins(MainMenuPlugin)
 
         .run();
 }
