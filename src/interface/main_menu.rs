@@ -10,17 +10,14 @@ pub fn build_main_menu (commands: &mut Commands, asset_server: &Res<AssetServer>
     let mut temporary_tree = UiTree::new();
 
     //Create the widgets and handle errors
-    let main_menu = Widget::create(&mut temporary_tree, "main_menu", layout::Relative::default().pack())?;
-    let background = Widget::create(&mut temporary_tree, &main_menu.end("background"), layout::Solid::default().with_width(1920.0).with_height(1080.0).with_scaling(SolidScale::Fill).pack())?;
+    let main_menu = Widget::create(&mut temporary_tree, "main_menu", RelativeLayout::default().pack())?;
+    let background = Widget::create(&mut temporary_tree, &main_menu.end("background"), SolidLayout::default().with_width(1920.0).with_height(1080.0).with_scaling(SolidScale::Fill).pack())?;
 
 
-    let boundary = Widget::create(&mut temporary_tree, &main_menu.end("boundary"), layout::Solid::default().with_width(16.0).with_height(9.0).with_scaling(SolidScale::Fit).pack())?;
+    let boundary = Widget::create(&mut temporary_tree, &main_menu.end("boundary"), SolidLayout::default().with_width(16.0).with_height(9.0).with_scaling(SolidScale::Fit).pack())?;
 
     //Merge the temporary tree to main tree if nothing failed so far
     ui_tree.merge(temporary_tree)?;
-
-    //Make it visible
-    main_menu.fetch_mut(ui_tree, "").unwrap().set_visibility(true);
 
     //Spawn the Background
     commands.spawn(ImageElementBundle::new(background.clone(), &ImageParams::default().with_width(Some(100.0)).with_height(Some(100.0)), asset_server.load("images/interface/main_menu/background_0.png"), Vec2::new(1920.0,1080.0)));
@@ -60,9 +57,6 @@ pub fn build_main_menu (commands: &mut Commands, asset_server: &Res<AssetServer>
 
 
 
-
-
-
 /// # Slow Rotation Effect
 #[derive(Component, Default)]
 pub struct SlowRotation {
@@ -75,8 +69,8 @@ impl SlowRotation {
         }
     }
 }
-pub fn slow_rotation_update (mut query: Query<(&mut Transform, &mut SlowRotation)>) {
-    for (mut transform, mut rotation) in &mut query {
+pub fn slow_rotation_update (mut query: Query<(&mut Transform, &SlowRotation)>) {
+    for (mut transform, rotation) in &mut query {
         transform.rotate_z(rotation.ang_speed);
     }
 }
