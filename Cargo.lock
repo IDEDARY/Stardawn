@@ -636,10 +636,38 @@ dependencies = [
 name = "bevy_lunex"
 version = "0.1.0"
 dependencies = [
+ "bevy_lunex_core",
+ "bevy_lunex_ui",
+ "bevy_lunex_utility",
+]
+
+[[package]]
+name = "bevy_lunex_core"
+version = "0.1.0"
+dependencies = [
  "ahash 0.8.3",
  "bevy",
  "colored",
  "mathio",
+]
+
+[[package]]
+name = "bevy_lunex_ui"
+version = "0.1.0"
+dependencies = [
+ "bevy",
+ "bevy_lunex_core",
+ "bevy_lunex_utility",
+ "colored",
+]
+
+[[package]]
+name = "bevy_lunex_utility"
+version = "0.1.0"
+dependencies = [
+ "bevy",
+ "bevy_lunex_core",
+ "colored",
 ]
 
 [[package]]

@@ -20,13 +20,12 @@ fn main() {
                 ..Default::default()
             }
         ))
+        .add_plugins(LunexUiPlugin)
+
         .add_systems(Startup, setup)
 
         //Debug
         //.add_plugins(LunexDebugPlugin)
-
-
-        .add_systems(Update, (hierarchy_update, element_update).chain())
 
         .add_plugins(InterfacePlugin)
         .add_plugins(MainMenuPlugin)
