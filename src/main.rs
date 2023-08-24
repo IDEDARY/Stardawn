@@ -25,7 +25,7 @@ fn main() {
         .add_systems(Startup, setup)
 
         //Debug
-        //.add_plugins(LunexDebugPlugin)
+        //.add_plugins(LunexUiDebugPlugin)
 
         .add_plugins(InterfacePlugin)
         .add_plugins(MainMenuPlugin)
