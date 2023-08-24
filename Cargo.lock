@@ -648,7 +648,6 @@ dependencies = [
  "ahash 0.8.3",
  "bevy",
  "colored",
- "mathio",
 ]
 
 [[package]]
@@ -659,6 +658,7 @@ dependencies = [
  "bevy_lunex_core",
  "bevy_lunex_utility",
  "colored",
+ "mathio",
 ]
 
 [[package]]
