@@ -1,6 +1,8 @@
 use bevy_lunex::prelude::*;
 use bevy::prelude::*;
 
+use crate::VectorElementRectangle;
+
 use super::style::FastFlickerEffect;
 
 /// Main menu constructor function
@@ -14,12 +16,17 @@ pub fn build_main_menu (commands: &mut Commands, asset_server: &Res<AssetServer>
     let background = Widget::create(&mut temporary_tree, &main_menu.end("background"), SolidLayout::default().with_width(1920.0).with_height(1080.0).with_scaling(SolidScale::Fill).pack())?;
 
 
-    let boundary = Widget::create(&mut temporary_tree, &main_menu.end("boundary"), SolidLayout::default().with_width(16.0).with_height(9.0).with_scaling(SolidScale::Fit).pack())?;
+    let boundary = Widget::create(&mut temporary_tree, &main_menu.end("boundary"), SolidLayout::default().with_width(192.0).with_height(47.0).with_vertical_anchor(0.0).with_scaling(SolidScale::Fit).pack())?;
+    commands.spawn((
+        ElementBundle::new(boundary.clone(), Element::default().with_bounds(Vec2::splat(1.0)).with_depth(6.0).with_width(Some(100.0)).with_height(Some(100.0))),
+        VectorElementRectangle
+    ));
 
     //Merge the temporary tree to main tree if nothing failed so far
     ui_tree.merge(temporary_tree)?;
 
     //Spawn the Background
+    
     commands.spawn(ImageElementBundle::new(background.clone(), &ImageParams::default().with_width(Some(100.0)).with_height(Some(100.0)), asset_server.load("images/interface/main_menu/background_0.png"), Vec2::new(1920.0,1080.0)));
     commands.spawn((
         ImageElementBundle::new(background.clone(), &ImageParams::default().with_depth(0.1), asset_server.load("images/interface/main_menu/background_1.png"), Vec2::new(1920.0,1080.0)),
@@ -38,18 +45,29 @@ pub fn build_main_menu (commands: &mut Commands, asset_server: &Res<AssetServer>
         FastFlickerEffect::new(7.0, 0.02, 0.1, 1.2),
     ));
 
-
+    let scale = 1.5;
     //# Spawn the planet
     commands.spawn((
-        ImageElementBundle::new(boundary.clone(), &ImageParams::center().with_depth(0.5).at(85.0, 75.0), asset_server.load("images/interface/main_menu/planet.png"), Vec2::new(1230.0,1341.0)),
+        ImageElementBundle::new(boundary.clone(), &ImageParams::center().with_depth(0.5).at(50.0, 100.0).with_scale(100.0*scale), asset_server.load("images/interface/main_menu/planet.png"), Vec2::new(1230.0,1341.0)),
         SlowRotation::new(f32::to_radians(-0.02)),
     ));
 
     //# Spawn the ring
     commands.spawn((
-        ImageElementBundle::new(boundary.clone(), &ImageParams::center().with_depth(0.5).at(85.0, 75.0).scaled(200.0), asset_server.load("images/interface/main_menu/planet_ring_lowres.png"), Vec2::new(1077.0,1065.0)),
+        ImageElementBundle::new(boundary.clone(), &ImageParams::center().with_depth(0.5).at(50.0, 100.0).with_scale(200.0*scale), asset_server.load("images/interface/main_menu/planet_ring_lowres.png"), Vec2::new(1077.0,1065.0)),
         SlowRotation::new(f32::to_radians(0.02)),
     ));
+
+
+
+    let text_style = TextStyle {
+        font: asset_server.load("fonts/interface/dune_rise/Dune_Rise.ttf"),
+        font_size: 180.0,
+        color: Color::WHITE,
+    };
+    commands.spawn(TextElementBundle::new(boundary.clone(), &TextParams::center().with_style(&text_style).at(50.0, 30.0).with_scale(13.0), "Stardawn"));
+    commands.spawn(ImageElementBundle::new(boundary.clone(), &ImageParams::default().with_depth(6.0).with_width(Some(100.0)).with_height(Some(100.0)), asset_server.load("images/interface/main_menu/shadow.png"), Vec2::new(1920.0,470.0)));
+    
 
     Result::Ok(())
 }
@@ -74,7 +92,6 @@ pub fn slow_rotation_update (mut query: Query<(&mut Transform, &SlowRotation)>) 
         transform.rotate_z(rotation.ang_speed);
     }
 }
-
 
 
 pub struct MainMenuPlugin;
