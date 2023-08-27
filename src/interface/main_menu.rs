@@ -13,12 +13,16 @@ pub fn build_main_menu (commands: &mut Commands, asset_server: &Res<AssetServer>
 
     //Create the widgets and handle errors
     let main_menu = Widget::create(&mut temporary_tree, "main_menu", RelativeLayout::default().pack())?;
-    let background = Widget::create(&mut temporary_tree, &main_menu.end("background"), SolidLayout::default().with_width(1920.0).with_height(1080.0).with_scaling(SolidScale::Fill).pack())?;
+    commands.spawn((
+        ElementBundle::new(main_menu.clone(), Element::default().with_bounds(Vec2::splat(1.0)).with_depth(100.0).with_width(Some(100.0)).with_height(Some(100.0))),
+        VectorElementRectangle
+    ));
 
+    let background = Widget::create(&mut temporary_tree, &main_menu.end("background"), SolidLayout::default().with_width(1920.0).with_height(1080.0).with_scaling(SolidScale::Fill).pack())?;
 
     let boundary = Widget::create(&mut temporary_tree, &main_menu.end("boundary"), SolidLayout::default().with_width(192.0).with_height(47.0).with_vertical_anchor(0.0).with_scaling(SolidScale::Fit).pack())?;
     commands.spawn((
-        ElementBundle::new(boundary.clone(), Element::default().with_bounds(Vec2::splat(1.0)).with_depth(6.0).with_width(Some(100.0)).with_height(Some(100.0))),
+        ElementBundle::new(boundary.clone(), Element::default().with_bounds(Vec2::splat(1.0)).with_depth(100.0).with_width(Some(100.0)).with_height(Some(100.0))),
         VectorElementRectangle
     ));
 
@@ -44,7 +48,7 @@ pub fn build_main_menu (commands: &mut Commands, asset_server: &Res<AssetServer>
         ImageElementBundle::new(background.clone(), &ImageParams::default().with_depth(0.4), asset_server.load("images/interface/main_menu/background_4.png"), Vec2::new(1920.0,1080.0)),
         FastFlickerEffect::new(7.0, 0.02, 0.1, 1.2),
     ));
-
+    
     let scale = 1.5;
     //# Spawn the planet
     commands.spawn((

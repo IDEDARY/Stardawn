@@ -78,10 +78,9 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
 pub trait Pastel {
     fn pastel(&self) -> Color;
 }
-
 impl Pastel for Color {
     fn pastel(&self) -> Color {
-        *self + Color::WHITE * 0.25
+        (*self + Color::WHITE * 0.25).with_a(1.0)
     }
 }
 
@@ -96,26 +95,12 @@ pub fn vector_rectangle_update (mut painter: ShapePainter, query: Query<(&Transf
         let ww = transform.scale.x;
         let hh = transform.scale.y;
 
-        //painter.hollow = true;
+        painter.hollow = true;
         painter.color = Color::MIDNIGHT_BLUE.pastel();
         painter.thickness = 10.0;
         painter.corner_radii = Vec4::splat(20.0);
         painter.rect(Vec2::new(ww, hh));
 
-        /*painter.set_scale(transform.scale);
 
-        painter.hollow = true;
-        painter.color = Color::MIDNIGHT_BLUE;
-        painter.thickness = 5.0;
-        painter.corner_radii = Vec4::splat(10.0);
-        painter.rect(Vec2::splat(20.0));
-    
-        painter.translate(Vec3::new(10.0, 10.0, 0.0));
-    
-        painter.hollow = true;
-        painter.color = Color::SEA_GREEN;
-        painter.thickness = 5.0;
-        painter.corner_radii = Vec4::splat(10.0);
-        painter.rect(Vec2::splat(20.0));*/
     }
 }
