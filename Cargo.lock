@@ -662,8 +662,6 @@ dependencies = [
 [[package]]
 name = "bevy_lunex"
 version = "0.0.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "20b5b6f1e03cd6d1b8077c09f00d2e6fef0d0ed1d45d7615327a1c4005f7815a"
 dependencies = [
  "bevy_lunex_core",
  "bevy_lunex_ui",
@@ -673,8 +671,6 @@ dependencies = [
 [[package]]
 name = "bevy_lunex_core"
 version = "0.0.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "13778fec3a9ec06e5e11240c009a95c5e6da41f56a8dfbcb49d6b344691adaa9"
 dependencies = [
  "ahash 0.8.3",
  "bevy",
@@ -684,8 +680,6 @@ dependencies = [
 [[package]]
 name = "bevy_lunex_ui"
 version = "0.0.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9912a0fc0c98826871539226506b01923e33347cabb4cfbe4e605cb8459d3373"
 dependencies = [
  "bevy",
  "bevy_lunex_core",
@@ -697,8 +691,6 @@ dependencies = [
 [[package]]
 name = "bevy_lunex_utility"
 version = "0.0.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "004f13975ee39179277c9e000c1cdc82e7c179a5d86f6d4f97b0ace666c02c9f"
 dependencies = [
  "bevy",
  "bevy_lunex_core",

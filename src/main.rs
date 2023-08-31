@@ -13,17 +13,17 @@ fn main() {
             WindowPlugin {
                 primary_window: Some(Window {
                     title: "Stardawn".into(),
+                    //transparent: true,
                     ..default()
                 }),
                 ..default()
             }
         ))
+        //.insert_resource(ClearColor(Color::NONE))
         .add_plugins(Shape2dPlugin::default())
         .add_plugins(LunexUiPlugin)
 
         .add_systems(Startup, setup)
-
-        .add_systems(Update, vector_rectangle_update.after(element_update))
 
         //Debug
         //.add_plugins(LunexUiDebugPlugin)
@@ -73,34 +73,4 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.spawn (ui_tree);
     
 
-}
-
-pub trait Pastel {
-    fn pastel(&self) -> Color;
-}
-impl Pastel for Color {
-    fn pastel(&self) -> Color {
-        (*self + Color::WHITE * 0.25).with_a(1.0)
-    }
-}
-
-#[derive(Component)]
-pub struct VectorElementRectangle;
-pub fn vector_rectangle_update (mut painter: ShapePainter, query: Query<(&Transform, &VectorElementRectangle)>) {
-    for (transform, _) in &query {
-
-        painter.set_translation(transform.translation);
-        painter.set_scale(Vec3::splat(1.0));
-
-        let ww = transform.scale.x;
-        let hh = transform.scale.y;
-
-        painter.hollow = true;
-        painter.color = Color::MIDNIGHT_BLUE.pastel();
-        painter.thickness = 10.0;
-        painter.corner_radii = Vec4::splat(20.0);
-        painter.rect(Vec2::new(ww, hh));
-
-
-    }
 }

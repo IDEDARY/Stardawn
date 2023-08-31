@@ -1,6 +1,16 @@
 use bevy::prelude::*;
 use mathio::tween;
 
+pub trait Pastel {
+    fn pastel(&self) -> Color;
+}
+impl Pastel for Color {
+    fn pastel(&self) -> Color {
+        (*self + Color::WHITE * 0.25).with_a(1.0)
+    }
+}
+
+
 /// # Fast Flicker Effect
 #[derive(Component, Default)]
 pub struct FastFlickerEffect {
