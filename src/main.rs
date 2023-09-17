@@ -64,12 +64,12 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     ));
 
     
-    let mut ui_tree = UiTree::new();
+    let mut ui_tree = UiTree::new("main");
     build_main_menu(&mut commands, &asset_server, &mut ui_tree).unwrap();
     
 
-    println!("{}", ui_tree.get_map_debug());
-    println!("{}", ui_tree.get_map());
+    println!("{}", ui_tree.generate_map_debug());
+    println!("{}", ui_tree.generate_map());
     commands.spawn (ui_tree);
     
 

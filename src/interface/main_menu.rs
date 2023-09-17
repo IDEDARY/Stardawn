@@ -9,24 +9,24 @@ pub fn build_main_menu (commands: &mut Commands, asset_server: &Res<AssetServer>
     // === LAYOUT ===
     
     //Create temporary UI tree
-    let mut temporary_tree = UiTree::new();
+    let mut temporary_tree = UiTree::new("Temporary");
 
     //Create the widgets and handle errors
-    let main_menu = Widget::create(&mut temporary_tree, "main_menu", RelativeLayout::default().pack())?;
+    let main_menu = Widget::create(&mut temporary_tree, "main_menu", RelativeLayout::default())?;
 
     //Background
-    let background = Widget::create(&mut temporary_tree, &main_menu.end("background"), SolidLayout::new().with_width(1920.0).with_height(1080.0).with_scaling(SolidScale::Fill).pack())?;
+    let background = Widget::create(&mut temporary_tree, main_menu.end("background"), SolidLayout::new().with_width(1920.0).with_height(1080.0).with_scaling(SolidScale::Fill))?;
 
     //Menu boundary
-    let boundary = Widget::create(&mut temporary_tree, &main_menu.end("boundary"), SolidLayout::new().with_width(192.0).with_height(47.0).with_vertical_anchor(0.0).with_scaling(SolidScale::Fit).pack())?;
+    let boundary = Widget::create(&mut temporary_tree, main_menu.end("boundary"), SolidLayout::new().with_width(192.0).with_height(47.0).with_vertical_anchor(0.0).with_scaling(SolidScale::Fit))?;
     
-    let darkness_up = Widget::create(&mut temporary_tree, &boundary.end(""), RelativeLayout::new().with_rel_1(Vec2::new(0.0, -1500.0)).with_rel_2(Vec2::new(100.0, 0.0)).pack())?;
-    let darkness_down = Widget::create(&mut temporary_tree, &boundary.end(""), RelativeLayout::new().with_rel_1(Vec2::new(0.0, 100.0)).with_rel_2(Vec2::new(100.0, 1500.0)).pack())?;
-    let darkness_left = Widget::create(&mut temporary_tree, &boundary.end(""), RelativeLayout::new().with_rel_1(Vec2::new(-200.0, 0.0)).with_rel_2(Vec2::new(0.0, 100.0)).pack())?;
-    let darkness_right = Widget::create(&mut temporary_tree, &boundary.end(""), RelativeLayout::new().with_rel_1(Vec2::new(100.0, 0.0)).with_rel_2(Vec2::new(300.0, 100.0)).pack())?;
+    let darkness_up = Widget::create(&mut temporary_tree, boundary.end(""), RelativeLayout::new().with_rel_1(Vec2::new(0.0, -1500.0)).with_rel_2(Vec2::new(100.0, 0.0)))?;
+    let darkness_down = Widget::create(&mut temporary_tree, boundary.end(""), RelativeLayout::new().with_rel_1(Vec2::new(0.0, 100.0)).with_rel_2(Vec2::new(100.0, 1500.0)))?;
+    let darkness_left = Widget::create(&mut temporary_tree, boundary.end(""), RelativeLayout::new().with_rel_1(Vec2::new(-200.0, 0.0)).with_rel_2(Vec2::new(0.0, 100.0)))?;
+    let darkness_right = Widget::create(&mut temporary_tree, boundary.end(""), RelativeLayout::new().with_rel_1(Vec2::new(100.0, 0.0)).with_rel_2(Vec2::new(300.0, 100.0)))?;
 
     //Button
-    let play_button = Widget::create(&mut temporary_tree, &boundary.end("play"), RelativeLayout::new().with_rel_1(Vec2::new(43.0, 75.0)).with_rel_2(Vec2::new(57.0, 85.0)).pack())?;
+    let play_button = Widget::create(&mut temporary_tree, boundary.end("play"), RelativeLayout::new().with_rel_1(Vec2::new(43.0, 75.0)).with_rel_2(Vec2::new(57.0, 85.0)))?;
 
     // ===========================================================
     // === MERGE THE CHANGES ===
@@ -191,8 +191,8 @@ mod elements {
             for (widget, _) in &query {
 
                 for cursor in &cursors {
-                    if widget.is_within(tree, &cursor.position_world().as_lunex(tree.offset)).unwrap() {
-                        widget.re
+                    if widget.contains_position(tree, &cursor.position_world().as_lunex(tree.offset)).unwrap() {
+                        //widget.re
                     }
                 }
             }
